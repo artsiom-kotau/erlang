@@ -6,7 +6,7 @@
 %%% @end
 %%% Created : 26. скв 2016 14:33
 %%%-------------------------------------------------------------------
--module(list_api_add_item_to_sorted_list).
+-module(add_item_to_sorted_list_test).
 -author("roodxx").
 -include_lib("eunit/include/eunit.hrl").
 

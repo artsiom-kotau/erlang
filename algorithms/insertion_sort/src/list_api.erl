@@ -10,13 +10,29 @@
 -author("roodxx").
 
 %% API
--export([add_item_to_sort_list/2]).
+-export([add_item_to_sort_list/2, list_size/1, last_element/1, list_split/2]).
 
 add_item_to_sort_list(Item, [H | T]) ->
   if Item =< H -> [Item, H | T];
-    true -> [H|add_item_to_sort_list(Item, T)]
+    true -> [H | add_item_to_sort_list(Item, T)]
   end;
 add_item_to_sort_list(Item, []) -> [Item].
+
+list_size([_ | T]) -> 1 + list_size(T);
+list_size([]) -> 0.
+
+last_element([H | T]) -> get_last_element(T, H);
+last_element([]) -> nil.
+
+list_split([H | T], FirstAmount) ->
+  {FirstList, SecondList} = list_split(T, FirstAmount - 1),
+  {[H | FirstList], SecondList};
+list_split([], FirstAmount) when FirstAmount > 0 -> throw(list_size_less_then_require);
+list_split([], 0) -> {[], []};
+list_split(L, 0) -> {[], L}.
+
+get_last_element([H | T], _) -> get_last_element(T, H);
+get_last_element([], L) -> L.
 
 
 
