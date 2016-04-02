@@ -25,11 +25,13 @@ last_element([H | T]) -> get_last_element(T, H);
 last_element([]) -> nil.
 
 list_split([H | T], FirstAmount) ->
-  {FirstList, SecondList} = list_split(T, FirstAmount - 1),
-  {[H | FirstList], SecondList};
+  if (FirstAmount == 0) -> {[], [H | T]};
+    true ->
+      {FirstList, SecondList} = list_split(T, FirstAmount - 1),
+      {[H | FirstList], SecondList}
+  end;
 list_split([], FirstAmount) when FirstAmount > 0 -> throw(list_size_less_then_require);
-list_split([], 0) -> {[], []};
-list_split(L, 0) -> {[], L}.
+list_split([], 0) -> {[], []}.
 
 get_last_element([H | T], _) -> get_last_element(T, H);
 get_last_element([], L) -> L.
