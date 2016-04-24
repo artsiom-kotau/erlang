@@ -13,15 +13,16 @@
 -export([max_subarray/1]).
 
 max_subarray([H | T]) ->
-  find_max_subarray(T, H, H);
-max_subarray([]) -> {0, 0}.
+  {_, MaxSum} = find_max_subarray(T, H, H),
+  MaxSum;
+max_subarray([]) -> 0.
 
-find_max_subarray([H | T], cur_sum, cur_max_sum) ->
-  new_cur_sum = get_max(H, cur_sum + H),
-  new_max_sum = get_max(cur_max_sum, new_cur_sum),
-  max_subarray(T, new_cur_sum, new_max_sum);
+find_max_subarray([H | T], CurSum, CurMaxSum) ->
+  NewCurSum = get_max(H, CurSum + H),
+  NewMaxSum = get_max(CurMaxSum, NewCurSum),
+  find_max_subarray(T, NewCurSum, NewMaxSum);
 
-find_max_subarray([], cur_sum, cur_max_sum) -> {cur_sum, cur_max_sum}.
+find_max_subarray([], CurSum, CurMaxSum) -> {CurSum, CurMaxSum}.
 
 
 get_max(FirstValue, SecondValue) ->
